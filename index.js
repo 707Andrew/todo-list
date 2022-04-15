@@ -18,7 +18,7 @@ const createTemplate = (task, index) => {
             <div class="description">${task.description}</div>
             <div class="btn-todo-item">
                <input onclick="completeTask(${index})" class="btn-complete" type="checkbox" ${task.completed ? 'checked' : ''}>
-               <button class="btn-delete">Delete</button>
+               <button onclick="deleteTask(${index})" class="btn-delete">Delete</button>
             </div>
         </div>
     `
@@ -30,7 +30,7 @@ const fillHtmlList = () => {
         tasks.forEach((item, index) => {
             todosWrapper.innerHTML += createTemplate(item, index);
         })
-        todoItemsElements = document.querySelector('.todo-item')
+        todoItemsElements = document.querySelector('.todo-item');
     }
 }
 
@@ -57,3 +57,11 @@ addTasksBtn.addEventListener('click', () => {
     fillHtmlList();
     addTaskInput.value = '';
 })
+
+const deleteTask = index => {
+    setTimeout(() => {
+        tasks.splice(index, 1);
+        updateLocalStorage();
+        fillHtmlList();
+    }, 180)
+}
